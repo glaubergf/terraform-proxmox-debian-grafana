@@ -173,14 +173,14 @@ variable "file_env_path" {
   type        = string
   sensitive   = true
   description = "Caminho do .env"
-  default = ""
+  default     = ""
 }
 
 variable "file_datasources_path" {
   type        = string
   sensitive   = true
   description = "Caminho do datasources.yml"
-  default = ""
+  default     = ""
 }
 
 # Variáveis usadas quando rodando no Terraform Cloud (valores passados via TFC variables)
