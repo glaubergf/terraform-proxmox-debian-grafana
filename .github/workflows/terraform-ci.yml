@@ -6,7 +6,20 @@ on:
   pull_request:
     branches: [ "main" ]
 
+
 jobs:
+  debug-dns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instalar dig e nslookup
+        run: sudo apt-get update && sudo apt-get install -y dnsutils
+
+      - name: Testar resolução DNS do domínio
+        run: |
+          echo "🔎 Testando DNS:"
+          dig ci-proxmox.mcn.br
+          nslookup ci-proxmox.mcn.br
+          
   terraform:
     name: Apply Terraform
     runs-on: ubuntu-latest
