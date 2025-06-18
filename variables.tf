@@ -111,13 +111,13 @@ variable "docker_compose_path" {
 variable "file_json_speedtest_path" {
   description = "Dashboard speedtest"
   type        = string
-  default = "./configs/dash-elevalink-speedtest.json"
+  default     = "./configs/dash-elevalink-speedtest.json"
 }
 
 variable "file_json_zabbix_hw_path" {
   description = "Dashboard Zabbix HW"
   type        = string
-  default = "./configs/dash-zabbix-docker-hardware.json"
+  default     = "./configs/dash-zabbix-docker-hardware.json"
 }
 
 ### Sensíveis declaradas sem default (lidas de terraform.tfvars ou GitHub Secrets)
