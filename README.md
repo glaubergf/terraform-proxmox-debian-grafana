@@ -1,8 +1,8 @@
 <!---
 Projeto: terraform-proxmox-debian-grafana
-Descrição: Este projeto automatiza a criação de uma máquina virtual Debian 12 (Bookworm) 
-no Proxmox utilizando Terraform e Cloud-Init, realizando a instalação do Grafana e 
-MariaDB via Docker.
+Descrição: Este projeto automatiza a criação de uma máquina virtual Debian 12 
+(Bookworm) no Proxmox utilizando Terraform e Cloud-Init, realizando a instalação 
+do Grafana e MariaDB via Docker.
 Autor: Glauber GF (mcnd2)
 Criado em: 05-06-2025
 Atualizado: 17-06-2025
