@@ -1,15 +1,17 @@
 # Origem do arquivo de configuração do Cloud Init.
 # Template cloud-init usando variável com conteúdo
 data "template_file" "cloud_init" {
-  template = var.cloud_config_content
+  #template = var.cloud_config_content
+  template = local.cloud_config_content
 
-  vars = {
+  /*vars = {
     ssh_key  = var.ssh_key
     hostname = var.vm_hostname
     domain   = var.vm_domain
     password = var.vm_password
     user     = var.vm_user
-  }
+  }*/
+  vars = {}
 }
 
 # Template de rede usando conteúdo direto

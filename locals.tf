@@ -8,6 +8,13 @@ locals {
   file_datasources_content   = var.file_datasources_content
   #file_json_speedtest_content   = var.file_json_speedtest_content
   #file_json_zabbix_hw_content   = var.file_json_zabbix_hw_content
+  cloud_config_content = templatefile("${path.module}/templates/cloud-init.yml.tmpl",
+    {
+      user     = var.vm_user
+      password = var.vm_password
+      ssh_key  = var.ssh_key
+    }
+  )
 }
 
 # Rodar localmente
