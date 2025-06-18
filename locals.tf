@@ -13,6 +13,8 @@ locals {
       user     = var.vm_user
       password = var.vm_password
       ssh_key  = var.ssh_key
+      hostname = var.vm_hostname
+      domain   = var.vm_domain
     }
   )
 }
