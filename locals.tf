@@ -1,11 +1,11 @@
 # Rodar com Terraform Cloud
 
 locals {
-  config_motd_script_content    = var.config_motd_script_content
-  motd_grafana_content          = var.motd_grafana_content
-  docker_compose_content        = var.docker_compose_content
-  file_env_content              = var.file_env_content
-  file_datasources_content      = var.file_datasources_content
+  config_motd_script_content = var.config_motd_script_content
+  motd_grafana_content       = var.motd_grafana_content
+  docker_compose_content     = var.docker_compose_content
+  file_env_content           = var.file_env_content
+  file_datasources_content   = var.file_datasources_content
   #file_json_speedtest_content   = var.file_json_speedtest_content
   #file_json_zabbix_hw_content   = var.file_json_zabbix_hw_content
 }
