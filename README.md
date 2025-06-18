@@ -5,7 +5,7 @@ Descrição: Este projeto automatiza a criação de uma máquina virtual Debian 
 do Grafana e MariaDB via Docker.
 Autor: Glauber GF (mcnd2)
 Criado em: 05-06-2025
-Atualizado: 17-06-2025
+Atualizado: 17-06-2025 -> teste github actions
 --->
 
 # Servidor Debian Grafana (Docker)
