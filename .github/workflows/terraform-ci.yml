@@ -43,13 +43,13 @@ jobs:
           echo "${{ secrets.FILE_ENV_CONTENT }}" > ./security/.env
           echo "${{ secrets.FILE_DATASOURCES_YML }}" > ./security/datasources.yml
 
-      - name: Verificar formatação do Terraform
-        run: terraform fmt -check -recursive
+      - name: Inicializar Terraform
+        run: terraform init
         env:
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
-      - name: Inicializar Terraform
-        run: terraform init
+      - name: Verificar formatação do Terraform
+        run: terraform fmt -check -recursive
         env:
           TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
