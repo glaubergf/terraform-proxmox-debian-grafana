@@ -1,42 +1,62 @@
 name: Terraform CI
 
 on:
-  pull_request:
-    branches: [ "main" ]
   push:
     branches: [ "dev" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  TF_VAR_proxmox_url: ${{ secrets.PX_URL }}
+  TF_VAR_proxmox_token_id: ${{ secrets.PX_TOKEN_ID }}
+  TF_VAR_proxmox_token_secret: ${{ secrets.PX_TOKEN_SECRET }}
+  TF_VAR_vm_password: ${{ secrets.VM_PASSWORD }}
+  TF_VAR_vm_user: ${{ secrets.VM_USER }}
+  TF_VAR_srv_proxmox: ${{ secrets.SRV_PROXMOX }}
+  TF_VAR_ssh_key: "./security/tf-proxmox_id_rsa.pub"
+  TF_VAR_private_key: "./security/tf-proxmox_id_rsa"
+  TF_VAR_file_env_path: "./security/.env"
+  TF_VAR_file_datasources_path: "./security/datasources.yml"
 
 jobs:
   terraform:
-    name: Terraform Pipeline
+    name: Apply Terraform
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
+      - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.6.6
+          terraform_version: 1.8.3
+
+      - name: Criar arquivos sensíveis necessários
+        run: |
+          mkdir -p security
+
+          echo "${{ secrets.SSH_KEY_PUB }}" > ./security/tf-proxmox_id_rsa.pub
+          echo "${{ secrets.SSH_KEY_PRIV }}" > ./security/tf-proxmox_id_rsa
+          chmod 600 ./security/tf-proxmox_id_rsa
+
+          echo "${{ secrets.FILE_ENV_CONTENT }}" > ./security/.env
+          echo "${{ secrets.FILE_DATASOURCES_YML }}" > ./security/datasources.yml
+
+      - name: Verificar formatação do Terraform
+        run: terraform fmt -check -recursive
 
       - name: Inicializar Terraform
-        run: |
-          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
-          terraform init
+        run: terraform init
         env:
-          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Validar sintaxe do Terraform
-        run: |
-          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
-          terraform validate
+        run: terraform validate
         env:
-          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Verificar plano de execução
-        run: |
-          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
-          terraform plan
+        run: terraform plan
         env:
-          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
