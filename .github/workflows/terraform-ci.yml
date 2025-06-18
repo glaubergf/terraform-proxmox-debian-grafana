@@ -27,6 +27,8 @@ jobs:
       run: terraform validate
 
     - name: Verificar mudanças no plano
-      run: terraform plan
+      run: |
+        export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
+        terraform plan
       env:
         TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
