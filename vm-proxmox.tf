@@ -196,8 +196,8 @@ resource "null_resource" "upload_files" {
   provisioner "file" {
     content     = local.file_json_zabbix_hw_content
     destination = "/tmp/dash-zabbix-docker-hardware.json"
-  }
-}*/
+  }*/
+}
 
 # Instalação do Docker na VM
 resource "null_resource" "install_docker" {
