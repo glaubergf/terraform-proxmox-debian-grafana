@@ -8,29 +8,35 @@ on:
 
 jobs:
   terraform:
-    name: Validate Terraform
+    name: Terraform Pipeline
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do código
-      uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.6.6
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
 
-    - name: Inicializar Terraform
-      run: terraform init
-      env:
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      - name: Inicializar Terraform
+        run: |
+          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
+          terraform init
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Validar sintaxe
-      run: terraform validate
-      env:
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      - name: Validar sintaxe do Terraform
+        run: |
+          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
+          terraform validate
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
 
-    - name: Verificar mudanças no plano
-      run: terraform plan
-      env:
-        TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      - name: Verificar plano de execução
+        run: |
+          export TF_TOKEN_app_terraform_io=$TF_API_TOKEN
+          terraform plan
+        env:
+          TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
