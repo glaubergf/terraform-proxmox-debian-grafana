@@ -45,6 +45,8 @@ jobs:
 
       - name: Verificar formatação do Terraform
         run: terraform fmt -check -recursive
+        env:
+          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Inicializar Terraform
         run: terraform init
