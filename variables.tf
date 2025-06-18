@@ -111,15 +111,13 @@ variable "docker_compose_path" {
 variable "file_json_speedtest_path" {
   description = "Dashboard speedtest"
   type        = string
-  #default     = "./configs/dash-elevalink-speedtest.json"
-  default = ""
+  default     = "./configs/dash-elevalink-speedtest.json"
 }
 
 variable "file_json_zabbix_hw_path" {
   description = "Dashboard Zabbix HW"
   type        = string
-  #default     = "./configs/dash-zabbix-docker-hardware.json"
-  default = ""
+  default     = "./configs/dash-zabbix-docker-hardware.json"
 }
 
 # Variáveis sensíveis para secrets e arquivos (usadas em cloud e local)
@@ -175,12 +173,14 @@ variable "file_env_path" {
   type        = string
   sensitive   = true
   description = "Caminho do .env"
+  default = ""
 }
 
 variable "file_datasources_path" {
   type        = string
   sensitive   = true
   description = "Caminho do datasources.yml"
+  default = ""
 }
 
 # Variáveis usadas quando rodando no Terraform Cloud (valores passados via TFC variables)
