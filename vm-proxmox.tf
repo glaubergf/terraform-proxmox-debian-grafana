@@ -1,9 +1,10 @@
 # Origem do arquivo de configuração do Cloud Init.
+# Template cloud-init usando variável com conteúdo
 data "template_file" "cloud_init" {
-  template = file(var.cloud_config_file)
+  template = var.cloud_config_content
 
   vars = {
-    ssh_key  = file(var.ssh_key)
+    ssh_key  = var.ssh_key
     hostname = var.vm_hostname
     domain   = var.vm_domain
     password = var.vm_password
@@ -11,11 +12,13 @@ data "template_file" "cloud_init" {
   }
 }
 
+# Template de rede usando conteúdo direto
 data "template_file" "network_config" {
-  template = file(var.network_config_file)
+  template = var.network_config_content
 }
 
 # Criar uma cópia local dos arquivos para transferir para o servidor Proxmox.
+# (isso ainda funciona no Terraform Cloud)
 resource "local_file" "cloud_init" {
   content  = data.template_file.cloud_init.rendered
   filename = "${path.module}/configs/grafana-cloud-init.cfg"
@@ -31,7 +34,7 @@ resource "null_resource" "cloud_init" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.srv_proxmox
   }
 
@@ -51,7 +54,7 @@ resource "null_resource" "proxmox_template_script" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.srv_proxmox
   }
 
@@ -158,7 +161,7 @@ resource "null_resource" "upload_files" {
   connection {
     type        = "ssh"
     user        = var.vm_user
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.vm_ip
     timeout     = "5m"
   }
@@ -206,7 +209,7 @@ resource "null_resource" "install_docker" {
   connection {
     type        = "ssh"
     user        = var.vm_user
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.vm_ip
     timeout     = "5m"
   }
@@ -237,7 +240,7 @@ resource "null_resource" "prepare_environment" {
   connection {
     type        = "ssh"
     user        = var.vm_user
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.vm_ip
     timeout     = "5m"
   }
@@ -266,7 +269,7 @@ resource "null_resource" "docker_up" {
   connection {
     type        = "ssh"
     user        = var.vm_user
-    private_key = file(var.private_key)
+    private_key = var.private_key
     host        = var.vm_ip
     timeout     = "5m"
   }
