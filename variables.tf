@@ -1,158 +1,182 @@
-variable "proxmox_url" {
-  description = "URL do servidor Proxmox"
-  type        = string
-}
-
-variable "proxmox_token_id" {
-  description = "ID do token da API do Proxmox"
-  type        = string
-  sensitive   = true
-}
-
-variable "proxmox_token_secret" {
-  description = "Segredo do token da API do Proxmox"
-  type        = string
-  sensitive   = true
-}
+### variables.tf (com defaults ou não sensíveis declarados para commit seguro)
 
 variable "vm_hostname" {
   description = "Nome do host para a VM"
   type        = string
+  default     = "tf-pm-grafana"
 }
 
 variable "vm_ip" {
   description = "IP do host para a VM"
   type        = string
+  default     = "192.168.0.161"
 }
 
 variable "vm_domain" {
   description = "Domínio para a VM"
   type        = string
-}
-
-variable "vm_password" {
-  description = "Senha do usuário da VM"
-  type        = string
-  sensitive   = true
-}
-
-variable "vm_user" {
-  description = "Nome do usuário da VM"
-  type        = string
-  sensitive   = true
-}
-
-variable "srv_proxmox" {
-  description = "IP do servidor Proxmox"
-  type        = string
-  sensitive   = true
+  default     = "homelab.mcn"
 }
 
 variable "vm" {
   description = "Nome da VM"
   type        = string
+  default     = "tf-pm-grafana"
 }
 
 variable "node" {
   description = "Nó do cluster"
   type        = string
+  default     = "pve"
 }
 
 variable "template" {
   description = "Clone do template"
   type        = string
+  default     = "bookworm-nocloud"
 }
 
 variable "vm_vmid" {
   description = "VMID da VM"
   type        = number
+  default     = 203
 }
 
 variable "vm_memory" {
-  description = "Memória disponível da VM (in MB)"
+  description = "Memória disponível da VM (MB)"
   type        = number
+  default     = 1024
 }
 
 variable "vm_cores" {
   description = "Quantidade de cores da VM"
   type        = number
+  default     = 1
 }
 
 variable "storage_proxmox" {
-  description = "Armazanemnto do Proxmox"
+  description = "Armazenamento do Proxmox"
   type        = string
+  default     = "local"
 }
 
 variable "vm_macaddr" {
   description = "Endereço MAC da rede da VM"
   type        = string
+  default     = "BC:24:11:CB:18:06"
 }
 
 variable "disk_size" {
-  description = "Tamanho do disco da VM (in GB)"
+  description = "Tamanho do disco da VM (GB)"
   type        = number
-}
-
-variable "ssh_key" {
-  description = "Chave SSH pública para acessar a VM"
-  type        = string
-}
-
-variable "private_key" {
-  description = "Chave SSH privada"
-  type        = string
+  default     = 15
 }
 
 variable "cloud_config_file" {
-  description = "Caminho para o arquivo de configuração do cloud init"
+  description = "Caminho do arquivo cloud-init"
   type        = string
+  default     = "./configs/cloud-config.yml"
 }
 
 variable "network_config_file" {
-  description = "Caminho para o arquivo de configuração de rede"
+  description = "Caminho do arquivo de rede"
   type        = string
+  default     = "./configs/network-config.yml"
 }
 
 variable "vm_template_script_path" {
-  description = "Caminho para o script do template da VM"
+  description = "Caminho do script do template da VM"
   type        = string
+  default     = "./configs/vm-template.sh"
 }
 
 variable "config_motd_script_path" {
-  description = "Caminho para o script de configuração do MOTD"
+  description = "Caminho do script do MOTD"
   type        = string
+  default     = "./configs/config-motd.sh"
 }
 
 variable "motd_grafana_path" {
-  description = "Caminho para o arquivo de MOTD do Grafana"
+  description = "Caminho do arquivo de MOTD do Grafana"
   type        = string
+  default     = "./configs/motd-grafana"
 }
 
 variable "docker_compose_path" {
-  description = "Caminho para o arquivo do docker-compose"
+  description = "Caminho do arquivo docker-compose"
   type        = string
-}
-
-variable "file_env_path" {
-  description = "Caminho para o arquivo '.env' com as variaveis do banco de dados"
-  type        = string
-  sensitive   = true
-}
-
-variable "file_datasources_path" {
-  description = "Caminho para o arquivo 'datasources.yml'"
-  type        = string
-  sensitive   = true
+  default     = "./configs/docker-compose.yml"
 }
 
 variable "file_json_speedtest_path" {
-  description = "Caminho para o arquivo de dashboard 'elevalink-speedtest.json'"
+  description = "Dashboard speedtest"
   type        = string
-  sensitive   = true
+  default = "./configs/dash-elevalink-speedtest.json"
 }
 
 variable "file_json_zabbix_hw_path" {
-  description = "Caminho para o arquivo de dashboard 'zabbix-docker-hardware.json'"
+  description = "Dashboard Zabbix HW"
+  type        = string
+  default = "./configs/dash-zabbix-docker-hardware.json"
+}
+
+### Sensíveis declaradas sem default (lidas de terraform.tfvars ou GitHub Secrets)
+variable "proxmox_url" {
   type        = string
   sensitive   = true
+  description = "URL da API do Proxmox"
+}
+
+variable "proxmox_token_id" {
+  type        = string
+  sensitive   = true
+  description = "Token ID"
+}
+
+variable "proxmox_token_secret" {
+  type        = string
+  sensitive   = true
+  description = "Token Secret"
+}
+
+variable "vm_password" {
+  type        = string
+  sensitive   = true
+  description = "Senha da VM"
+}
+
+variable "vm_user" {
+  type        = string
+  sensitive   = true
+  description = "Usuário da VM"
+}
+
+variable "srv_proxmox" {
+  type        = string
+  sensitive   = true
+  description = "IP do Proxmox"
+}
+
+variable "ssh_key" {
+  type        = string
+  sensitive   = true
+  description = "Chave SSH pública"
+}
+
+variable "private_key" {
+  type        = string
+  sensitive   = true
+  description = "Chave SSH privada"
+}
+
+variable "file_env_path" {
+  type        = string
+  sensitive   = true
+  description = "Caminho do .env"
+}
+
+variable "file_datasources_path" {
+  type        = string
+  sensitive   = true
+  description = "Caminho do datasources.yml"
 }
