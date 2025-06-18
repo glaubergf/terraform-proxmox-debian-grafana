@@ -164,37 +164,37 @@ resource "null_resource" "upload_files" {
   }
 
   provisioner "file" {
-    source      = var.config_motd_script_path
+    content     = local.config_motd_script_content
     destination = "/tmp/config-motd.sh"
   }
 
   provisioner "file" {
-    source      = var.motd_grafana_path
+    content     = local.motd_grafana_content
     destination = "/tmp/motd-grafana"
   }
 
   provisioner "file" {
-    source      = var.docker_compose_path
+    content     = local.docker_compose_content
     destination = "/tmp/docker-compose.yml"
   }
 
   provisioner "file" {
-    source      = var.file_env_path
+    content     = local.file_env_content
     destination = "/tmp/.env"
   }
 
   provisioner "file" {
-    source      = var.file_datasources_path
+    content     = local.file_datasources_content
     destination = "/tmp/datasources.yml"
   }
 
   provisioner "file" {
-    source      = var.file_json_speedtest_path
+    content     = local.file_json_speedtest_content
     destination = "/tmp/dash-elevalink-speedtest.json"
   }
 
   provisioner "file" {
-    source      = var.file_json_zabbix_hw_path
+    content     = local.file_json_zabbix_hw_content
     destination = "/tmp/dash-zabbix-docker-hardware.json"
   }
 }

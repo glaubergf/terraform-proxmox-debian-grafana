@@ -1,5 +1,4 @@
-### variables.tf (com defaults ou não sensíveis declarados para commit seguro)
-
+# Variáveis de provisionamento de recursos e configuração
 variable "vm_hostname" {
   description = "Nome do host para a VM"
   type        = string
@@ -72,6 +71,7 @@ variable "disk_size" {
   default     = 15
 }
 
+# Variáveis de caminho usadas em execução local
 variable "cloud_config_file" {
   description = "Caminho do arquivo cloud-init"
   type        = string
@@ -120,7 +120,7 @@ variable "file_json_zabbix_hw_path" {
   default     = "./configs/dash-zabbix-docker-hardware.json"
 }
 
-### Sensíveis declaradas sem default (lidas de terraform.tfvars ou GitHub Secrets)
+# Variáveis sensíveis para secrets e arquivos (usadas em cloud e local)
 variable "proxmox_url" {
   type        = string
   sensitive   = true
@@ -180,3 +180,46 @@ variable "file_datasources_path" {
   sensitive   = true
   description = "Caminho do datasources.yml"
 }
+
+# Variáveis usadas quando rodando no Terraform Cloud (valores passados via TFC variables)
+variable "config_motd_script_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do script do MOTD (usado no Terraform Cloud)"
+}
+
+variable "motd_grafana_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do MOTD Grafana (usado no Terraform Cloud)"
+}
+
+variable "docker_compose_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do docker-compose.yml (usado no Terraform Cloud)"
+}
+
+variable "file_env_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do .env (usado no Terraform Cloud)"
+}
+
+variable "file_datasources_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do datasources.yml (usado no Terraform Cloud)"
+}
+
+/*variable "file_json_speedtest_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do dashboard speedtest (usado no Terraform Cloud)"
+}
+
+variable "file_json_zabbix_hw_content" {
+  type        = string
+  sensitive   = true
+  description = "Conteúdo do dashboard Zabbix hardware (usado no Terraform Cloud)"
+}*/

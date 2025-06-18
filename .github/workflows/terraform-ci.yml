@@ -32,17 +32,6 @@ jobs:
         with:
           terraform_version: 1.8.3
 
-      - name: Criar arquivos sensíveis necessários
-        run: |
-          mkdir -p security
-
-          echo "${{ secrets.SSH_KEY_PUB }}" > ./security/tf-proxmox_id_rsa.pub
-          echo "${{ secrets.SSH_KEY_PRIV }}" > ./security/tf-proxmox_id_rsa
-          chmod 600 ./security/tf-proxmox_id_rsa
-
-          echo "${{ secrets.FILE_ENV_CONTENT }}" > ./security/.env
-          echo "${{ secrets.FILE_DATASOURCES_YML }}" > ./security/datasources.yml
-
       - name: Inicializar Terraform
         run: terraform init
         env:
