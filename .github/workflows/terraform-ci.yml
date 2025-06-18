@@ -6,22 +6,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  TF_VAR_proxmox_url: ${{ secrets.PX_URL }}
-  TF_VAR_proxmox_token_id: ${{ secrets.PX_TOKEN_ID }}
-  TF_VAR_proxmox_token_secret: ${{ secrets.PX_TOKEN_SECRET }}
-  TF_VAR_vm_password: ${{ secrets.VM_PASSWORD }}
-  TF_VAR_vm_user: ${{ secrets.VM_USER }}
-  TF_VAR_srv_proxmox: ${{ secrets.SRV_PROXMOX }}
-  TF_VAR_ssh_key: "./security/tf-proxmox_id_rsa.pub"
-  TF_VAR_private_key: "./security/tf-proxmox_id_rsa"
-  TF_VAR_file_env_path: "./security/.env"
-  TF_VAR_file_datasources_path: "./security/datasources.yml"
-
 jobs:
   terraform:
     name: Apply Terraform
     runs-on: ubuntu-latest
+
+    env:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
     steps:
       - name: Checkout repo
@@ -34,20 +25,12 @@ jobs:
 
       - name: Inicializar Terraform
         run: terraform init
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Verificar formatação do Terraform
         run: terraform fmt -check -recursive
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Validar sintaxe do Terraform
         run: terraform validate
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
       - name: Verificar plano de execução
         run: terraform plan
-        env:
-          TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
