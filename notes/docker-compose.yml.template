@@ -1,0 +1,45 @@
+services:
+  syspass-db:
+    image: mariadb:10.11.11
+    container_name: syspass-db
+    restart: unless-stopped
+    environment:
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MARIADB_ROOT=${DB_ROOT}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+    volumes:
+      - syspass-db-data:/var/lib/mysql
+    networks:
+      - syspass-net
+    #ports:
+      #- "3306:3306"
+
+  syspass-app:
+    image: syspass/syspass:3.2.11
+    container_name: syspass-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - syspass-app-config:/var/www/html/sysPass/app/config
+      - syspass-app-backup:/var/www/html/sysPass/app/backup
+    networks:
+      - syspass-net
+    depends_on:
+      - syspass-db
+
+networks:
+  syspass-net:
+    name: syspass-net
+    driver: bridge
+
+volumes:
+  syspass-db-data:
+    name: syspass-db-data
+  syspass-app-config:
+    name: syspass-app-config
+  syspass-app-backup:
+    name: syspass-app-backup

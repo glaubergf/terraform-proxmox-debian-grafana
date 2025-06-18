@@ -1,0 +1,13 @@
+# CONFIG .gitignore
+
+# Diretórios locais
+.terraform/
+security/
+
+# Arquivos locais
+configs/grafana-cloud-init.cfg
+configs/grafana-network-config.cfg
+.terraform.lock.hcl
+plano-grafana
+terraform.tfstate*
+terraform.tfvars

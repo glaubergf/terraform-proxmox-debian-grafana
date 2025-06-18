@@ -1,0 +1,51 @@
+services:
+  grafana-db:
+    image: mariadb:11.7.2
+    container_name: grafana-db
+    restart: unless-stopped
+    environment:
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+      - TZ=America/Sao_Paulo
+    ports:
+      - "3306:3306"  # Acesso externo ao MariaDB
+    volumes:
+      - grafana_db_data:/var/lib/mysql
+    networks:
+      - grafana-net
+
+  grafana-app:
+    image: grafana/grafana:11.1.0-ubuntu
+    container_name: grafana-app
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASS}
+      - GF_DATABASE_TYPE=mysql
+      - GF_DATABASE_HOST=${DB_HOST}
+      - GF_DATABASE_NAME=${DB_NAME}
+      - GF_DATABASE_USER=${DB_USER}
+      - GF_DATABASE_PASSWORD=${DB_PASS}
+      - GF_LICENSE_EDITION=oss
+      - TZ=America/Sao_Paulo
+      - GF_INSTALL_PLUGINS=dalvany-image-panel,alexanderzobnin-zabbix-app
+    ports:
+      - "3000:3000"  # Acesso via LAN
+    volumes:
+      - grafana_app_data:/var/lib/grafana
+      # Provisioning
+      - ./security/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+    networks:
+      - grafana-net
+
+networks:
+  grafana-net:
+    driver: bridge
+
+volumes:
+  grafana_db_data:
+    name: grafana_db_data
+  grafana_app_data:
+    name: grafana_app_data

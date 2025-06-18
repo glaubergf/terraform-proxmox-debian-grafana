@@ -1,0 +1,34 @@
+# Banco de dados
+DB_CONTAINER=syspass-db
+APP_CONTAINER=syspass-app
+DB_ROOT=root
+DB_ROOT_PASS=rootpasswd
+DB_USER=syspass
+DB_PASS=syspasspasswd
+DB_NAME=syspassdb
+
+# Bucket AWS
+AWS_BUCKET1=s3://syspass
+AWS_PROFILE2=useraws
+
+# Diretorios
+APP_CONFIG_CONTAINER_PATH=/var/lib/docker/volumes/syspass-app-config/_data/config.xml
+DOWNLOAD_DIR=/root/docker_syspass
+DUMP_DIR=/root/docker_syspass/script_backup
+LOG_DIR=/var/log/syspass
+AWS_SRC_DIR=/root/docker_syspass/script_backup
+AWS_DEST_DIR=/root/.aws
+
+# Prefixos de arquivos
+DUMP_PREFIX=syspassdb-dump_tf-pm-syspass
+CONFIG_PREFIX=syspassdb-config_tf-pm-syspass
+SNAPSHOT_PREFIX=syspassdb-snapshot_tf-pm-syspass
+
+
+# Arquivos AWS
+AWS_CREDENTIALS=aws-credentials
+AWS_CONFIG=aws-config
+
+# Nome dos arquivos após download
+DUMP_DOWNLOAD_FILE=download-dump-syspassdb.sql
+CONFIG_DOWNLOAD_FILE=download-config-syspassdb.xml

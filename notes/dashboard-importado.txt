@@ -1,0 +1,55 @@
+Exportar e Importar Dashboard no Grafana
+
+Passo a passo completo para exportar e importar dashboards no Grafana.
+Ideal para quando quer mover dashboards entre ambientes ou corrigir manualmente.
+
+
+✅ 1. Exportar um Dashboard no Grafana
+🔹  Acesse o dashboard que deseja exportar:
+    No menu lateral, clique em "Home → Dashboards"
+    Clique no dashboard desejado para abri-lo
+
+🔹  Abra o painel de configurações do dashboard:
+    Clique no ícone de engrenagem (⚙️) no topo do dashboard
+    Você estará em "Settings" do dashboard
+
+🔹  Vá para a aba "JSON Model":
+    No menu lateral dentro da configuração do dashboard, clique em "JSON Model"
+    Você verá um grande bloco de JSON com o conteúdo do dashboard
+
+🔹  Copie e salve:
+    Clique no bloco do JSON e copie todo o conteúdo
+    Cole em um arquivo .json no editor local (ex: dashboard-zabbix.json)
+
+💡 Dica: Use id: null e defina um uid único se for reimportar para evitar conflito com dashboards existentes.
+
+
+✅ 2. Descubra o UID do datasource correto
+🔹  Na interface do Grafana (onde quer importar):
+    Vá em "Home → Connections → Data sources"
+    Clique no datasource desejado (ex: Zabbix)
+    Copie o valor do campo “UID” (fica no final da URL da página)
+    (ex url: http://192.168.0.160:3000/connections/datasources/edit/PC25FA8835BF7CBDD)
+    Ex uid: PC25FA8835BF7CBDD .
+
+
+✅ 3. Editar o .json com o UID correto
+🔹  Use o comando sed para substituir pelo UID real do datasource que você acabou de verificar:
+    (ex comando: sed -i 's/"uid": ".*"/"uid": "PC25FA8835BF7CBDD"/g' dashboard-zabbix.json)
+    Esse comando substitui todos os "uid": "..." no arquivo pelo UID certo.
+
+
+✅ 4. Validar se o dashboard tem essa estrutura
+🔹  Após o sed, confirme que o painel esta assim (exemplo parcial):
+    "datasource": {
+       "type": "alexanderzobnin-zabbix-datasource",
+        "uid": "PC25FA8835BF7CBDD"
+    }
+    Se tiver apenas "datasource": "Zabbix" ou valores simples, pode não funcionar em alguns Grafana mais novos. O ideal é o objeto com type e uid.
+
+
+✅ 5. Reimportar o dashboard
+🔹  Vá em "Home → Dashboards → Import dashboard":
+    Cole ou carregue o arquivo .json atualizado
+    Verifique se o Grafana não pergunta pelo datasource (ele já deve reconhecer).
+
