@@ -1,0 +1,32 @@
+name: Terraform CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  terraform:
+    name: Validate Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.6.6
+
+    - name: Inicializar Terraform
+      run: terraform init
+
+    - name: Validar sintaxe
+      run: terraform validate
+
+    - name: Verificar mudanças no plano
+      run: terraform plan
+      env:
+        TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
