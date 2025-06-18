@@ -184,11 +184,11 @@ variable "file_datasources_path" {
 }
 
 # Variáveis usadas quando rodando no Terraform Cloud (valores passados via TFC variables)
-variable "cloud_config_content" {
+/*variable "cloud_config_content" {
   type        = string
   sensitive   = true
   description = "Conteúdo do arquivo cloud-init"
-}
+}*/
 
 variable "network_config_content" {
   type        = string
