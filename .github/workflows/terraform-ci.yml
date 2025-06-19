@@ -23,10 +23,10 @@ jobs:
       - name: Preparar arquivos sensíveis
         run: |
           mkdir -p ./security
-          printf "%s\n" "${{ secrets.TF_VARS_CONTENT }}" > terraform.tfvars
-          printf "%s\n" "${{ secrets.ENV_FILE_CONTENT }}" > ./security/.env
-          printf "%s\n" "${{ secrets.DATASOURCES_FILE }}" > ./security/datasources.yml
-          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ./security/tf-proxmox_id_rsa
+          echo -e "${{ secrets.TF_VARS_CONTENT }}" > terraform.tfvars
+          echo -e "${{ secrets.ENV_FILE_CONTENT }}" > ./security/.env
+          echo -e "${{ secrets.DATASOURCES_FILE }}" > ./security/datasources.yml
+          echo -e "${{ secrets.SSH_PRIVATE_KEY }}" > ./security/tf-proxmox_id_rsa
 
       - name: Ajustar permissões da chave privada
         run: chmod 600 ./security/tf-proxmox_id_rsa
