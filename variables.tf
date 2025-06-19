@@ -38,7 +38,7 @@ variable "template" {
 variable "vm_vmid" {
   description = "VMID da VM"
   type        = number
-  default     = 203
+  default     = 205
 }
 
 variable "vm_memory" {

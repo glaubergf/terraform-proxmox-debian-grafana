@@ -1,4 +1,4 @@
-terraform {
+/*terraform {
   backend "remote" {
     organization = "homelabmcn"
 
@@ -6,5 +6,4 @@ terraform {
       name = "terraform-proxmox-debian-grafana-dev"
     }
   }
-}
-
+}*/
