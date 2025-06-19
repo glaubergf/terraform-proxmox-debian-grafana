@@ -237,6 +237,3 @@ variable "file_json_zabbix_hw_content" {
   sensitive   = true
   description = "Conteúdo do dashboard Zabbix hardware (usado no Terraform Cloud)"
 }*/
-
-variable "cf_access_client_id" {}
-variable "cf_access_client_secret" {}
