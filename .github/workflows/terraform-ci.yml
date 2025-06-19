@@ -23,10 +23,10 @@ jobs:
       - name: Preparar arquivos sensíveis
         run: |
           mkdir -p ./security
-          echo "${{ secrets.TF_VARS_CONTENT }}" > terraform.tfvars
-          echo "${{ secrets.ENV_FILE_CONTENT }}" > ./security/.env
-          echo "${{ secrets.DATASOURCES_FILE }}" > ./security/datasources.yml
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ./security/tf-proxmox_id_rsa
+          printf "%s\n" "${{ secrets.TF_VARS_CONTENT }}" > terraform.tfvars
+          printf "%s\n" "${{ secrets.ENV_FILE_CONTENT }}" > ./security/.env
+          printf "%s\n" "${{ secrets.DATASOURCES_FILE }}" > ./security/datasources.yml
+          printf "%s\n" "${{ secrets.SSH_PRIVATE_KEY }}" > ./security/tf-proxmox_id_rsa
 
       - name: Ajustar permissões da chave privada
         run: chmod 600 ./security/tf-proxmox_id_rsa
@@ -38,8 +38,8 @@ jobs:
         run: terraform validate
 
       - name: Verificar plano de execução
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=plano-grafana
 
       #- name: Aplicar infraestrutura (somente na branch main)
       #  if: github.ref == 'refs/heads/main'
-      #  run: terraform apply -auto-approve tfplan
+      #  run: terraform apply -auto-approve plano-grafana
