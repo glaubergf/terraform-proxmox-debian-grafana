@@ -17,9 +17,9 @@ jobs:
       - name: Testar resolução DNS do domínio
         run: |
           echo "🔎 Testando DNS:"
-          dig ci-proxmox.mcn.br
-          nslookup ci-proxmox.mcn.br
-          
+          dig ci-proxmox.mcn.tec.br
+          nslookup ci-proxmox.mcn.tec.br
+
   terraform:
     name: Apply Terraform
     runs-on: ubuntu-latest
