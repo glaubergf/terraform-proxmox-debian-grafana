@@ -1,0 +1,37 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: [ "dev", "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  terraform:
+    name: Apply Terraform Local Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.3
+
+      - name: Inicializar Terraform
+        run: terraform init
+
+      - name: Verificar formatação do Terraform
+        run: terraform fmt -check -recursive
+
+      - name: Validar sintaxe do Terraform
+        run: terraform validate
+
+      - name: Verificar plano de execução
+        run: terraform plan -out=plano-grafana
+
+      - name: Aplicar infraestrutura (local)
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve plano-grafana

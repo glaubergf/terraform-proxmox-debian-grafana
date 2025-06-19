@@ -1,6 +1,7 @@
 variable "proxmox_url" {
   description = "URL do servidor Proxmox"
   type        = string
+  sensitive   = true
 }
 
 variable "proxmox_token_id" {
