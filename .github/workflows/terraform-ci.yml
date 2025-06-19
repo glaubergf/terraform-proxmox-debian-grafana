@@ -32,6 +32,6 @@ jobs:
       - name: Verificar plano de execução
         run: terraform plan -out=plano-grafana
 
-      - name: Aplicar infraestrutura (local)
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve plano-grafana
+      #- name: Aplicar infraestrutura (local)
+      #  if: github.ref == 'refs/heads/main'
+      #  run: terraform apply -auto-approve plano-grafana
