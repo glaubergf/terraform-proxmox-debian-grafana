@@ -93,10 +93,8 @@ resource "proxmox_vm_qemu" "debian_nocloud" {
     cores = var.vm_cores
   }
   memory = var.vm_memory
-  #sockets = 1 # Warning: Argument is deprecated
   agent = 1
   kvm   = true
-  # numa    = false # Warning: Argument is deprecated
   onboot = true
 
   # Definir os parâmetros do disco de inicialização bootdisk = "scsi0".
@@ -116,7 +114,6 @@ resource "proxmox_vm_qemu" "debian_nocloud" {
   disk {
     type = "cloudinit"
     slot = "scsi1" #"ide2"
-    #format  = "qcow2" # o Proxmox ignora o parâmetro 'format' quando usa type 'cloudinit'.
     storage = var.storage_proxmox
   }
 
