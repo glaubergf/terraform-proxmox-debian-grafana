@@ -1,11 +1,15 @@
 <!---
+# ================================================================
 Projeto: terraform-proxmox-debian-grafana
-Descrição: Este projeto automatiza a criação de uma máquina virtual Debian 12 
-(Bookworm) no Proxmox utilizando Terraform e Cloud-Init, realizando a instalação 
-do Grafana e MariaDB via Docker.
-Autor: Glauber GF (mcnd2)
-Criado em: 05-06-2025
-Atualizado: 17-06-2025
+---
+Descrição:  Este projeto automatiza a criação de uma máquina virtual 
+Debian 12 (Bookworm) no Proxmox utilizando Terraform e Cloud-Init, 
+realizando a instalação do Grafana e MariaDB via Docker.
+---
+Autor:      Glauber GF (mcnd2)
+Criado em:  05-06-2025
+Atualizado: 23-06-2025
+# ================================================================
 --->
 
 # Servidor Debian Grafana (Docker)
@@ -84,9 +88,9 @@ terraform-proxmox-debian-grafana
 │   ├── network-config.yml
 │   └── vm-template.sh
 ├── images
+│   ├── dashboard.png
 │   ├── grafana.png
 │   └── tf-pm-grafana.png
-├── LICENSE
 ├── notes
 │   ├── art-ascii-to-modt.txt
 │   ├── dashboard-importado.txt
@@ -94,15 +98,16 @@ terraform-proxmox-debian-grafana
 │   ├── docker-compose.yml.template
 │   ├── dotenv.template
 │   └── terraform.tfvars.template
-├── output.tf
-├── provider.tf
-├── README.md
 ├── security
 │   ├── .env
 │   ├── auth-proxmox.txt
 │   ├── datasources.yml
 │   ├── tf-proxmox_id_rsa
 │   └── tf-proxmox_id_rsa.pub
+├── LICENSE
+├── output.tf
+├── provider.tf
+├── README.md
 ├── terraform.tfvars
 ├── variables.tf
 └── vm-proxmox.tf
